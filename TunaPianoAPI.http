@@ -1,0 +1,6 @@
+@TunaPianoAPI_HostAddress = http://localhost:5015
+
+GET {{TunaPianoAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
