@@ -9,6 +9,6 @@
         public decimal? Length { get; set; }
 
         public Artist? Artist { get; set; } 
-        public List<Genre>? Genres { get; set;
+        public List<Genre>? Genres { get; set; }
     }
 }
