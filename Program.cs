@@ -105,6 +105,13 @@ namespace TunaPianoAPI
 
             });
 
+            // Song
+            // View List of Songs
+            app.MapGet("/songs", (TunaPianoDbContext db) =>
+            {
+                return db.Songs.ToList();
+            });
+
             app.Run();
         }
     }
