@@ -218,6 +218,20 @@ namespace TunaPianoAPI
                 db.SaveChanges();
                 return Results.NoContent();
             });
+
+            //Delete genre
+            app.MapDelete("/genres/{genreId}", (TunaPianoDbContext db, int GenreId) =>
+            {
+                Genre genre = db.Genres.SingleOrDefault(genre => genre.GenreId == GenreId);
+                if (genre == null)
+                {
+                    return Results.NotFound();
+                }
+                db.Genres.Remove(genre);
+                db.SaveChanges();
+                return Results.NoContent();
+
+            });
             app.Run();
         }
     }
