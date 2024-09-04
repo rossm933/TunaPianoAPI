@@ -46,7 +46,7 @@ namespace TunaPianoAPI
                         Title = "Rocket Man",
                         ArtistId = 1,
                         Album = "Honky Château",
-                        Length = 4.41m
+                        Length = 4.41m,
 
                 },
                 new Song
@@ -55,7 +55,7 @@ namespace TunaPianoAPI
                         Title = "Perfect",
                         ArtistId = 2,
                         Album = "Divide",
-                        Length = 4.23m
+                        Length = 4.23m,
 
                 },
                 new Song
@@ -64,7 +64,7 @@ namespace TunaPianoAPI
                         Title = "Ring of Fire",
                         ArtistId = 3,
                         Album = "The Best of Johnny Cash",
-                        Length = 2.38m
+                        Length = 2.38m,
 
                 }
 
@@ -89,6 +89,15 @@ namespace TunaPianoAPI
 
 
             });
+
+            modelBuilder.Entity<Song>()
+                .HasMany(s => s.Genres)
+                .WithMany(g => g.Songs)
+                .UsingEntity(j => j.HasData(
+                    new { SongsSongId = 1, GenresGenreId = 1 },
+                    new { SongsSongId = 2, GenresGenreId = 2 },
+                    new { SongsSongId = 3, GenresGenreId = 3 }
+                ));
 
         }
 

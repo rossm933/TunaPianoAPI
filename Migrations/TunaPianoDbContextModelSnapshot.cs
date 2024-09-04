@@ -35,6 +35,23 @@ namespace TunaPianoAPI.Migrations
                     b.HasIndex("SongsSongId");
 
                     b.ToTable("GenreSong");
+
+                    b.HasData(
+                        new
+                        {
+                            GenresGenreId = 1,
+                            SongsSongId = 1
+                        },
+                        new
+                        {
+                            GenresGenreId = 2,
+                            SongsSongId = 2
+                        },
+                        new
+                        {
+                            GenresGenreId = 3,
+                            SongsSongId = 3
+                        });
                 });
 
             modelBuilder.Entity("TunaPianoAPI.Models.Artist", b =>

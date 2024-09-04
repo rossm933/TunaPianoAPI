@@ -113,6 +113,16 @@ namespace TunaPianoAPI.Migrations
                     { 3, "The Best of Johnny Cash", 3, 2.38m, "Ring of Fire" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "GenreSong",
+                columns: new[] { "GenresGenreId", "SongsSongId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_GenreSong_SongsSongId",
                 table: "GenreSong",
