@@ -138,6 +138,24 @@ namespace TunaPianoAPI
                 db.SaveChanges();
                 return Results.Created($"/songs/{song.SongId}", song);
             });
+
+            //Update a song
+            app.MapPut("/songs/{songId}", (TunaPianoDbContext db, int SongId, Song song) =>
+            {
+                Song songToUpdate = db.Songs.SingleOrDefault(song => song.SongId == SongId);
+                if (songToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+                songToUpdate.Title = song.Title;
+                songToUpdate.ArtistId = song.ArtistId;
+                songToUpdate.Album = song.Album;
+                songToUpdate.Length = song.Length;
+
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
             app.Run();
         }
     }
