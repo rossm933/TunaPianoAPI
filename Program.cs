@@ -91,6 +91,20 @@ namespace TunaPianoAPI
                 return Results.NoContent();
             });
 
+            // Delete Artist
+            app.MapDelete("/artists/{artistId}", (TunaPianoDbContext db, int ArtistId) =>
+            {
+                Artist artist = db.Artists.SingleOrDefault(artist => artist.ArtistId == ArtistId);
+                if (artist == null)
+                {
+                    return Results.NotFound();
+                }
+                db.Artists.Remove(artist);
+                db.SaveChanges();
+                return Results.NoContent();
+
+            });
+
             app.Run();
         }
     }
