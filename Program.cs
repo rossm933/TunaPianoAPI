@@ -112,6 +112,24 @@ namespace TunaPianoAPI
                 return db.Songs.ToList();
             });
 
+            // View Song Details
+            app.MapGet("/songs/{songId}", (TunaPianoDbContext db, int songId) =>
+            {
+                var song = db.Songs
+                .Include(s => s.Genres)
+                                    
+                .Include(s => s.Artist)
+                                    
+                .SingleOrDefault(s => s.SongId == songId);
+
+                if (song == null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(song);
+
+            });
             app.Run();
         }
     }

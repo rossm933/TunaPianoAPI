@@ -12,7 +12,7 @@ using TunaPianoAPI;
 namespace TunaPianoAPI.Migrations
 {
     [DbContext(typeof(TunaPianoDbContext))]
-    [Migration("20240903235055_InitialCreate")]
+    [Migration("20240904013050_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,23 @@ namespace TunaPianoAPI.Migrations
                     b.HasIndex("SongsSongId");
 
                     b.ToTable("GenreSong");
+
+                    b.HasData(
+                        new
+                        {
+                            GenresGenreId = 1,
+                            SongsSongId = 1
+                        },
+                        new
+                        {
+                            GenresGenreId = 2,
+                            SongsSongId = 2
+                        },
+                        new
+                        {
+                            GenresGenreId = 3,
+                            SongsSongId = 3
+                        });
                 });
 
             modelBuilder.Entity("TunaPianoAPI.Models.Artist", b =>
