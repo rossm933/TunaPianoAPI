@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using TunaPianoAPI.Models;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace TunaPianoAPI
 {
@@ -158,7 +159,7 @@ namespace TunaPianoAPI
             });
 
             //Delete a song
-            app.MapDelete("/songs/{SongId}", (TunaPianoDbContext db, int SongId) =>
+            app.MapDelete("/songs/{songId}", (TunaPianoDbContext db, int SongId) =>
             {
                 Song song = db.Songs.SingleOrDefault(song => song.SongId == SongId);
                 if (song == null)
@@ -169,6 +170,13 @@ namespace TunaPianoAPI
                 db.SaveChanges();
                 return Results.NoContent();
 
+            });
+
+            //Genre 
+            //View list of genres
+            app.MapGet("/genres", (TunaPianoDbContext db) =>
+            {
+                return db.Genres.ToList();
             });
             app.Run();
         }
