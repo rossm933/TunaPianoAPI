@@ -75,6 +75,22 @@ namespace TunaPianoAPI
                 return Results.Created($"/artist/{artist.ArtistId}", artist);
             });
 
+            // Update Artist
+            app.MapPut("/artists/{artistId}", (TunaPianoDbContext db, int ArtistId, Artist artist) =>
+            {
+                Artist artistToUpdate = db.Artists.SingleOrDefault(artist => artist.ArtistId == ArtistId);
+                if (artistToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+                artistToUpdate.Name = artist.Name;
+                artistToUpdate.Age = artist.Age;
+                artistToUpdate.Bio = artist.Bio;
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
+
             app.Run();
         }
     }
