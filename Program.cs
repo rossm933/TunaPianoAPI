@@ -203,6 +203,21 @@ namespace TunaPianoAPI
                 db.SaveChanges();
                 return Results.Created($"/genres/{genre.GenreId}", genre);
             });
+
+            //Update genre
+            app.MapPut("/genres/{genreId}", (TunaPianoDbContext db, int GenreId, Genre genre) =>
+            {
+                Genre genreToUpdate = db.Genres.SingleOrDefault(genre => genre.GenreId == GenreId);
+                if (genreToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+                genreToUpdate.Description = genre.Description;
+
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
             app.Run();
         }
     }
