@@ -178,6 +178,23 @@ namespace TunaPianoAPI
             {
                 return db.Genres.ToList();
             });
+
+            //View genre details
+            app.MapGet("/genres/{genreId}", (TunaPianoDbContext db, int genreId) =>
+            {
+                var genre = db.Genres
+                .Include(s => s.Songs)
+
+                .SingleOrDefault(s => s.GenreId == genreId);
+
+                if (genre == null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(genre);
+
+            });
             app.Run();
         }
     }
