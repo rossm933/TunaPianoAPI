@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using TunaPianoAPI.Models;
+using System.Runtime.CompilerServices;
 
 namespace TunaPianoAPI
 {
@@ -44,9 +45,34 @@ namespace TunaPianoAPI
             app.UseAuthorization();
 
             // Artist
-            app.MapGet("/artist", (TunaPianoDbContext db) =>
+            // View List of Artists
+            app.MapGet("/artists", (TunaPianoDbContext db) =>
             {
                 return db.Artists.ToList();
+            });
+
+            // View Specific Artist and their songs
+            app.MapGet("/artists/{artistId}", (TunaPianoDbContext db, int artistId) =>
+            {
+                var artist = db.Artists
+                                .Include(p => p.Songs)
+                                .SingleOrDefault(u => u.ArtistId == artistId);
+
+                if (artist == null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(artist);
+
+            });
+
+            // Create Artist
+            app.MapPost("/artists", (TunaPianoDbContext db, Artist artist) =>
+            {
+                db.Artists.Add(artist);
+                db.SaveChanges();
+                return Results.Created($"/artist/{artist.ArtistId}", artist);
             });
 
             app.Run();
