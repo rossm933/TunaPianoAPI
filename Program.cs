@@ -195,6 +195,14 @@ namespace TunaPianoAPI
                 return Results.Ok(genre);
 
             });
+
+            //Create genre
+            app.MapPost("/genres", (TunaPianoDbContext db, Genre genre) =>
+            {
+                db.Genres.Add(genre);
+                db.SaveChanges();
+                return Results.Created($"/genres/{genre.GenreId}", genre);
+            });
             app.Run();
         }
     }
