@@ -156,6 +156,20 @@ namespace TunaPianoAPI
                 db.SaveChanges();
                 return Results.NoContent();
             });
+
+            //Delete a song
+            app.MapDelete("/songs/{SongId}", (TunaPianoDbContext db, int SongId) =>
+            {
+                Song song = db.Songs.SingleOrDefault(song => song.SongId == SongId);
+                if (song == null)
+                {
+                    return Results.NotFound();
+                }
+                db.Songs.Remove(song);
+                db.SaveChanges();
+                return Results.NoContent();
+
+            });
             app.Run();
         }
     }
