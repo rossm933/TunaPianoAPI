@@ -130,6 +130,14 @@ namespace TunaPianoAPI
                 return Results.Ok(song);
 
             });
+
+            //Create a song
+            app.MapPost("/songs", (TunaPianoDbContext db, Song song) =>
+            {
+                db.Songs.Add(song);
+                db.SaveChanges();
+                return Results.Created($"/songs/{song.SongId}", song);
+            });
             app.Run();
         }
     }
