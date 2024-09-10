@@ -12,7 +12,7 @@ using TunaPianoAPI;
 namespace TunaPianoAPI.Migrations
 {
     [DbContext(typeof(TunaPianoDbContext))]
-    [Migration("20240904013050_InitialCreate")]
+    [Migration("20240907175609_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
